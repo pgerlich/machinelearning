@@ -23,11 +23,12 @@ test_labels = train_labels.copy()
 # Initiate kNN, train the data, then test it with test data for k=1
 knn = cv2.KNearest()
 knn.train(train,train_labels)
-ret,result,neighbours,dist = knn.find_nearest(test,k=5)
+for i in range(1,50):
+	ret,result,neighbours,dist = knn.find_nearest(test,k=i)
 
-# Now we check the accuracy of classification
-# For that, compare the result with test_labels and check which are wrong
-matches = result==test_labels
-correct = np.count_nonzero(matches)
-accuracy = correct*100.0/result.size
-print accuracy
+	# Now we check the accuracy of classification
+	# For that, compare the result with test_labels and check which are wrong
+	matches = result==test_labels
+	correct = np.count_nonzero(matches)
+	accuracy = correct*100.0/result.size
+	print "K = ", i, " Accuracy %: ", accuracy
